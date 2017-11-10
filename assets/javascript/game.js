@@ -23,6 +23,8 @@
 
   $("#submit").on("click", function(){
   	event.preventDefault();
+
+
   	trainName = $("#train-name").val().trim();
 
   	destination = $("#destination").val().trim();
@@ -64,25 +66,43 @@
 
      console.log(nextTrain);
 
-  	database.ref().push({
-  		trainName: trainName,
+     var trains = {
+
+     	trainName: trainName,
   		destination: destination,
   		trainTime: trainTime,
   		frequency: frequency,
         nextTrain: nextTrain,
 	    nextarrival: nextarrival,
-  	});
   	
 
+     };
 
+     $("#train-name").val("");
+  $("#destination").val("");
+  $("#first-train").val("");
+  $("#frequency").val("");
+
+  	database.ref().push(trains);
 
   });
 
   
 
-  database.ref().on("child_added", function(trainAdded) {
+  database.ref().on("child_added", function(childSnapshot, prevChildKey) {
 
   	// Need a way to get the current time
+
+  	console.log(childSnapshot.val());
+
+  	var nameOfTrain = childSnapshot.val().trainName;
+  	var destinationOfTrain = childSnapshot.val().destination;
+  	var timeOfTrain = childSnapshot.val().trainTime;
+  	var frequencyOfTrain = childSnapshot.val().frequency;
+  	var trainNext = childSnapshot.val().nextTrain;
+  	var arrivalNext = childSnapshot.val().nextarrival;
+
+  	console.log(nameOfTrain);
 
 
 
@@ -91,7 +111,7 @@
 
 
 
-     $("#table").append('<tr><td>' + trainName + '</td><td>' + destination + '</td><td>' + frequency + '</td></tr>')
+     $("#table").append('<tr><td>' + nameOfTrain + '</td><td>' + destinationOfTrain + '</td><td>' + frequencyOfTrain + '</td><td>' + trainNext + '</td><td>' + arrivalNext + ' mins' + '</td></tr>');
 
   });
 
