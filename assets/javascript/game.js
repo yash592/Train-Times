@@ -34,7 +34,34 @@
   	
 
   	
-     var firstTimeConverted = moment(trainTime, "HH:mm").subtract(1, "years");
+     
+
+     var trains = {
+
+     	trainName: trainName,
+  		destination: destination,
+  		trainTime: trainTime,
+  		frequency: frequency,
+     //    nextTrain: nextTrain,
+	    // nextarrival: nextarrival,
+  	
+
+     };
+
+     $("#train-name").val("");
+  $("#destination").val("");
+  $("#first-train").val("");
+  $("#frequency").val("");
+
+  	database.ref().push(trains);
+
+  });
+
+  
+
+  database.ref().on("child_added", function(childSnapshot, prevChildKey) {
+
+  	var firstTimeConverted = moment(trainTime, "HH:mm").subtract(1, "years");
 
      console.log(firstTimeConverted);
 
@@ -66,31 +93,6 @@
 
      console.log(nextTrain);
 
-     var trains = {
-
-     	trainName: trainName,
-  		destination: destination,
-  		trainTime: trainTime,
-  		frequency: frequency,
-        nextTrain: nextTrain,
-	    nextarrival: nextarrival,
-  	
-
-     };
-
-     $("#train-name").val("");
-  $("#destination").val("");
-  $("#first-train").val("");
-  $("#frequency").val("");
-
-  	database.ref().push(trains);
-
-  });
-
-  
-
-  database.ref().on("child_added", function(childSnapshot, prevChildKey) {
-
   	// Need a way to get the current time
 
   	console.log(childSnapshot.val());
@@ -100,10 +102,11 @@
   	var timeOfTrain = childSnapshot.val().trainTime;
   	var frequencyOfTrain = childSnapshot.val().frequency;
   	var trainNext = childSnapshot.val().nextTrain;
-  	var arrivalNext = childSnapshot.val().nextarrival;
+  	var arrivalNext = childSnapshot.val().nextTrain;
 
-  	console.log(nameOfTrain);
+  	console.log(trainNext);
 
+    console.log(arrivalNext);
 
 
   	// get train times using first train time and frequency
