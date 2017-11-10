@@ -1,0 +1,29 @@
+th,td {
+	font-family: 'Arvo', serif;
+	text-align: center;
+}
+
+
+
+
+
+
+  	.jumbotron{
+  		background-color:black;
+  		color:white;
+  	}
+  	table{
+  		border-collapse:collapse;
+  		width:100%;
+  	}
+  	table, th, td{
+  		border: 0.5px solid black;
+  		font-size: 24px;
+  	}
+  
+.fa-train {
+	font-size: 139px;
+    position: absolute;
+    margin-left: 8%;
+}
+  

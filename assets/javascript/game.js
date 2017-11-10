@@ -24,15 +24,14 @@
   $("#submit").on("click", function(){
   	event.preventDefault();
   	trainName = $("#train-name").val().trim();
+
   	destination = $("#destination").val().trim();
   	trainTime = $("#first-train").val().trim();
   	frequency = $("#frequency").val().trim();
 
-  	// console.log(trainName);
-  	// console.log(destination);
-  	// console.log(trainTime);
-  	// console.log(frequency);
-  	// // console.log(trainName);
+  	
+
+  	
      var firstTimeConverted = moment(trainTime, "HH:mm").subtract(1, "years");
 
      console.log(firstTimeConverted);
@@ -44,22 +43,34 @@
 
      var timeDiff = moment().diff(moment(firstTimeConverted), "minutes");
      console.log(timeDiff);
+
      var timeremainder = timeDiff % frequency;
      console.log(timeremainder);
 
-     var miunutesTillTrain = frequency - timeremainder;
-     console.log(miunutesTillTrain);
+     var minutestillTrains = frequency - timeremainder;
+     console.log(minutestillTrains);
 
-     var nextTrain = moment().add(miunutesTillTrain, "minutes");
-     console.log("arrival time: " + moment(nextTrain).format("hh:mm"));
+     var minsTillTrain = parseInt(minutestillTrains);
+     var nextarrival = minsTillTrain.toString();
+     console.log(nextarrival);
+     console.log(minsTillTrain);
+
+     var nextTrains = moment().add(minutestillTrains, "minutes");
+     
+     console.log("arrival time: " + moment(nextTrains).format("hh:mm"));
+
+
+     var nextTrain = moment(nextTrains).format("hh:mm");
+
+     console.log(nextTrain);
 
   	database.ref().push({
   		trainName: trainName,
   		destination: destination,
   		trainTime: trainTime,
   		frequency: frequency,
-      // nextTrain: nextTrain,
-      // miunutesTillTrain: miunutesTillTrain,
+        nextTrain: nextTrain,
+	    nextarrival: nextarrival,
   	});
   	
 
@@ -67,25 +78,13 @@
 
   });
 
-  // var firstTime = "03:30"
-
- 
-
-  // var now = moment();
-
-  // console.log(now);
-
-  // console.log(moment().format());
-
-//   var time = new Date();
-// console.log(time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds());
+  
 
   database.ref().on("child_added", function(trainAdded) {
 
   	// Need a way to get the current time
 
-//   var time = new Date();
-// console.log(time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds());
+
 
   	// get train times using first train time and frequency
   	// using that calculate the frequency and append all 3 variables below.
